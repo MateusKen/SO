@@ -20,6 +20,8 @@ void *transfAB(void *args){
   fprintf(arqA, "%.2f", saldo_novoA);  //atualiza o saldo de A
   fclose(arqA);
 
+
+  
   //Transfere para o cliente B
   FILE *arqB = fopen("saldoB.txt", "w");
   if (arqB == NULL){
@@ -47,6 +49,7 @@ void *transfBA(void *args){
   float saldo_novoB = saldoB - valorBA;  //desconta o valor do saldo de B
   fprintf(arqB, "%.2f", saldo_novoB);  // atualiza o saldo de B
   fclose(arqB);
+
   
   //Transfere para o cliente A
   FILE *arqA = fopen("saldoA.txt", "w");
