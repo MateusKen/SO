@@ -1,3 +1,17 @@
+/*
+Nome: Erik Samuel Viana Hsu
+TIA: 32265921
+
+Nome: Mateus Kenzo Iochimoto
+TIA: 32216289
+
+Nome: Rodrigo Machado de Assis Oliveira de Lima
+TIA: 32234678
+
+Nome: Thiago Shihan Cardoso Toma
+TIA: 32210744
+*/
+
 #include <stdio.h>
 #include <pthread.h>
 #include <unistd.h>
