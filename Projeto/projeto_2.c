@@ -11,13 +11,13 @@ sem_t semA, semB;
 
 void *transfAB(void *args){
   float valorAB = *(float *)args;
-  sem_wait(&semA);
+  sem_wait(&semA); //Travamento recurso saldo A
   printf("Cliente A travando saldo A\n");
   sleep(2);
-  sem_wait(&semB);
+  sem_wait(&semB); //Travamento recurso saldo B
   printf("Cliente A travando saldo B\n");
   //Lê o próprio saldo
-  FILE *arqA = fopen("saldoA.txt", "w");
+  FILE *arqA = fopen("saldoA.txt", "r+");
   if (arqA == NULL){
     printf("Erro ao abrir o arquivo saldoA.txt");
   }
@@ -41,9 +41,9 @@ void *transfAB(void *args){
 
   fprintf(arqB, "%.2f", saldo_novoB); //atualiza saldo de B em saldoB.txt
   fclose(arqB);
-  sem_post(&semB);
+  sem_post(&semB); //Destrava recurso saldo B
   printf("Cliente A destravando saldo B\n");
-  sem_post(&semA);
+  sem_post(&semA); //Destrava recurso saldo A
   printf("Cliente A destravando saldo A\n");
   pthread_exit(NULL);
   sleep(3);
@@ -53,10 +53,10 @@ void *transfAB(void *args){
 
 void *transfBA(void *args){
   float valorBA = *(float *)args;
-  sem_wait(&semB);
+  sem_wait(&semB); //Trava recurso saldo B
   printf("Cliente B travando saldo B\n");
   sleep(2);
-  sem_wait(&semA);
+  sem_wait(&semA); //Trava recurso saldo A
   printf("Cliente B travando saldo A\n");
   //Lê o próprio saldo
   FILE *arqB = fopen("saldoB.txt", "w");
@@ -79,9 +79,9 @@ void *transfBA(void *args){
   float saldo_novoA = saldoA + valorBA;  //saldo de A + valor que B mandou
   fprintf(arqA, "%.2f", saldo_novoA); //atualiza saldo de A em saldoA.txt
   fclose(arqA);
-  sem_post(&semA);
+  sem_post(&semA); //Desrava recurso saldo A
   printf("Cliente B destravando saldo A\n");
-  sem_post(&semB);
+  sem_post(&semB); //Desrava recurso saldo B
   printf("Cliente B destravando saldo B\n");
   pthread_exit(NULL);
   sleep(3);
